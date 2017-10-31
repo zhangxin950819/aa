@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="zhang.domain.AdministratorType" table="AdministratorType">
+
+		<id name="typeId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="typeName"></property>
+		
+		<set name="adminintrators" inverse="true">
+			<key column="typeId"></key>
+			<one-to-many class="zhang.domain.Administrator"/>
+		</set>
+		
+		<set name="administratorMenus" inverse="true">
+			<key column="typeId"></key>
+			<one-to-many class="zhang.domain.AdministratorMenu"/>
+		</set>
+	</class>
+</hibernate-mapping>

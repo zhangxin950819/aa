@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+	<!-- 配置c3p0连接池 -->
+		<!-- 引入外部配置文件 -->
+	<context:property-placeholder  location="classpath:db.properties"/>
+		<!-- 配置c3p0连接池bean -->
+	<bean name="dataSource"  class="com.mchange.v2.c3p0.ComboPooledDataSource">
+			<property name="jdbcUrl"  value="${jdbc.jdbcUrl}"></property>
+			<property name="driverClass"  value="${jdbc.driverClass}"></property>
+			<property name="user"  value="${jdbc.user}"></property>
+			<property name="password"  value="${jdbc.password}"></property>
+	</bean>
+	
+	<!-- 配置sessionFactory bean -->
+	<bean name="sessionFactory"  class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+			<!-- 配置参数 -->
+		<property name="hibernateProperties">
+			<props>
+					<!-- 必选配置  其他4个配置在c3p0数据源配置中 -->
+					<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+					<!-- 可选配置 -->
+					<prop key="hibernate.show_sql">true</prop>
+					<prop key="hibernate.format_sql">true</prop>
+					<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+			<!-- 配置引入实体文件 -->
+		<property name="mappingDirectoryLocations"  value="classpath:zhang/domain"></property>	
+			<!-- 配置数据源 -->
+		<property name="dataSource"  ref="dataSource"></property>
+	</bean> 
+	
+	<!-- 开启事务标签 -->
+		<!-- 配置transactionManager -->
+	<bean name="transactionManager"  class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		 	<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- Action的配置 -->
+ 	<bean name="administratorAction"  class="zhang.web.action.AdministratorAction"  scope="prototype">
+		<property name="administratorService"  ref="administratorService"></property>
+	</bean>
+	<bean name="loginAction"  class="zhang.web.action.LoginAction"  scope="prototype">
+		<property name="loginService"  ref="loginService"></property>
+	</bean>
+	
+	<bean name="verifyImgAction"  class="zhang.web.action.VerifyImgAction"  scope="prototype">
+	</bean>
+	
+	
+	<!-- Service的配置 -->
+	<bean name="administratorService" class="zhang.service.AdministratorService" >
+		<property name="administratorDao" ref="administratorDao"></property>
+	</bean>
+	<bean name="loginService" class="zhang.service.LoginService" >
+		<property name="loginDao" ref="loginDao"></property>
+	</bean>
+	
+	<!--  Dao的配置 -->
+	<bean  name="administratorDao"  class="zhang.dao.AdministratorDao">
+		<property name="sessionFactory"  ref="sessionFactory"></property>
+	</bean>
+	<bean  name="loginDao"  class="zhang.dao.LoginDao">
+		<property name="sessionFactory"  ref="sessionFactory"></property>
+	</bean>
+</beans>

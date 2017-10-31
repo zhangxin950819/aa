@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!--  # struts.objectFactory = spring
+					让Action的创建交给spring管理
+				struts.objectFactory.spring.autoWire = name 
+					spring自动装配Action的依赖属性						
+	 -->
+	<constant name="struts.objectFactory" value="spring"></constant>
+
+	<package name="wuliuguanli" namespace="/" extends="struts-default">
+		
+		<!-- 定义拦截器 -->
+		<interceptors>
+			<interceptor name="LoginInterceptor" class="zhang.web.interceptor.LoginInterceptor" />
+			
+			<interceptor-stack name="myInterceptStack">
+				<interceptor-ref name="LoginInterceptor">
+					<param name="excludeMethods">creatVerifyImg,login</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 默认拦截器栈引用 -->
+		<default-interceptor-ref name="myInterceptStack"></default-interceptor-ref>
+		
+		<!--   定义全局结果集 -->
+		<global-results>
+			<result name="toLogin" type="redirect">/login.jsp</result>
+		</global-results>
+		
+		<action name="" class="administratorAction"  method="index">
+			<result name="index">/WEB-INF/page/index.jsp</result>
+		</action>
+		
+		<action name="administratorAction_*" class="administratorAction"  method="{1}">
+			<result name="index">/WEB-INF/page/index.jsp</result>
+			<result name="addAdmin">/WEB-INF/page/administrator/addAndEdit.jsp</result>
+			<result name="adminList">/WEB-INF/page/administrator/list.jsp</result>
+		</action>
+		
+		<action name="loginAction_*" class="loginAction"  method="{1}">
+			<result name="index" type="redirectAction">administratorAction_index</result>
+			<result name="fail" >/login.jsp</result>
+		</action>
+		
+		
+		<action name="verifyImgAction" class="verifyImgAction"  method="creatVerifyImg">
+		</action>
+	</package>
+</struts>
