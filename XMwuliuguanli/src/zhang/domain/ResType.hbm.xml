@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="zhang.domain.ResType" table="ResType">
+
+		<id name="resTypeId">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="resTypeName"></property>
+		
+ 		<set name="orders" inverse="true">
+			<key column="resTypeId"></key>
+			<one-to-many class="zhang.domain.Order"/>
+		</set>
+	</class>
+</hibernate-mapping>

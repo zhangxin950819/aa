@@ -16,8 +16,17 @@
 		<property name="name"></property>
 		<property name="phonenumber"></property>
 		<property name="address"></property>
-		<property name="district"></property>
 
+		<many-to-one name="district" column="districtId"  class="zhang.domain.District" ></many-to-one>
 		<many-to-one name="administratorType" column="typeId"  class="zhang.domain.AdministratorType" ></many-to-one>
+				
+ 		<set name="fromOrders" inverse="true">
+			<key column="fromAdministratorId"></key>
+			<one-to-many class="zhang.domain.Order"/>
+		</set> 
+ 		<set name="toOrders" inverse="true">
+			<key column="toAdministratorId"></key>
+			<one-to-many class="zhang.domain.Order"/>
+		</set>
 	</class>
 </hibernate-mapping>

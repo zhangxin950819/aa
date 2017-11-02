@@ -32,6 +32,12 @@
 		button.onclick = function(){
 			form.submit();
 		}
+		document.body.onkeydown=function(event){
+			var e = event || window.event || arguments.callee.caller.arguments[0];
+			if(e && e.keyCode==13){
+				form.submit();
+			}
+		}; 
 	}
 
 </script>

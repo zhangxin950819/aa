@@ -1,4 +1,7 @@
 package zhang.domain;
+
+import java.util.Set;
+
 //管理员表
 public class Administrator {
 
@@ -8,10 +11,12 @@ public class Administrator {
 	private String name;//姓名
 	private String phonenumber;//联系电话
 	private String address;//家庭住址
-	private String district;//所属地区
 	
-	private AdministratorType administratorType;//管理员权限
+	private District district; //所属地区
+ 	private AdministratorType administratorType;//管理员权限
 	
+	private Set<Order> fromOrders;
+	private Set<Order> toOrders;
 	
 	public String getId() {
 		return id;
@@ -55,15 +60,24 @@ public class Administrator {
 	public void setAdministratorType(AdministratorType administratorType) {
 		this.administratorType = administratorType;
 	}
-	public String getDistrict() {
+	public District getDistrict() {
 		return district;
 	}
-	public void setDistrict(String district) {
+	public void setDistrict(District district) {
 		this.district = district;
 	}
-	
-	
-	
+	public Set<Order> getFromOrders() {
+		return fromOrders;
+	}
+	public void setFromOrders(Set<Order> fromOrders) {
+		this.fromOrders = fromOrders;
+	}
+	public Set<Order> getToOrders() {
+		return toOrders;
+	}
+	public void setToOrders(Set<Order> toOrders) {
+		this.toOrders = toOrders;
+	}
 	@Override
 	public String toString() {
 		return "Administrator [id=" + id + ", username=" + username + ", password=" + password + ", name=" + name

@@ -47,6 +47,17 @@
 							</select></td>
 						</tr>
 						<tr>
+							<th>管理员所属区域：</th>
+							<td><select name="districtId">
+									<c:forEach items="${districtList}" var="district">
+										<option
+											${admin.district.districtId==district.districtId ? "selected" : ""}
+											value="${district.districtId}">${district.districtName}</option>
+									</c:forEach>
+							</select>
+							</td>
+						</tr>
+						<tr>
 							<th>管理员身份证号：</th>
 							<td><input class="common-text" required name="id" ${!empty editAmin ? "readOnly" : ""}
 								value="${admin.id}" size="50" type="text"></td>
@@ -65,11 +76,6 @@
 							<th>管理员家庭住址：</th>
 							<td><input class="common-text" required name="address"
 								size="50" value="${admin.address}" type="text"></td>
-						</tr>
-						<tr>
-							<th>管理员所属区域：</th>
-							<td><input class="common-text" required name="district"
-								size="50" value="${admin.district}" type="text"></td>
 						</tr>
 						<tr>
 							<th></th>

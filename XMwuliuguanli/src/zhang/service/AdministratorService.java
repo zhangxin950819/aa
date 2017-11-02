@@ -39,6 +39,9 @@ public class AdministratorService {
 	public List<AdministratorType> findAllAdministratorType() {
 		return administratorDao.findAllAdministratorType();
 	}
+	public AdministratorType findAdministratorTypeById(Integer typeId){
+		return administratorDao.findAllAdministratorTypeByTypeId(typeId);
+	}
 	//根据id查询管理员
 	public Administrator findAdministratorById(String id) {
 		return administratorDao.findAdministratorById(id);

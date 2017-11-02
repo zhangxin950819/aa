@@ -17,7 +17,9 @@ import util.StringUtil;
 import zhang.domain.Administrator;
 import zhang.domain.AdministratorMenu;
 import zhang.domain.AdministratorType;
+import zhang.domain.District;
 import zhang.service.AdministratorService;
+import zhang.service.DistrictService;
 
 //对管理员的操作
 public class AdministratorAction extends ActionSupport implements Preparable {
@@ -25,6 +27,7 @@ public class AdministratorAction extends ActionSupport implements Preparable {
 	private static final long serialVersionUID = 1L;
 
 	private AdministratorService administratorService;
+	private DistrictService districtService;
 
 	private Administrator administrator = new Administrator();
 	private PageUtil page = new PageUtil();
@@ -52,6 +55,8 @@ public class AdministratorAction extends ActionSupport implements Preparable {
 	public String addAdmin() {
 		List<AdministratorType> type = administratorService.findAllAdministratorType();
 		ActionContext.getContext().put("administratorTypeList", type);
+		List<District> districtList = districtService.findAllDistrict();
+		ActionContext.getContext().put("districtList", districtList);
 		if(StringUtil.hasLength(administrator.getId()) && StringUtil.isBlank(administrator.getName())){
 			Administrator admin = administratorService.findAdministratorById(administrator.getId());
 			ActionContext.getContext().put("admin",admin);
@@ -63,9 +68,9 @@ public class AdministratorAction extends ActionSupport implements Preparable {
 	// 编辑管理员
 	public String editAdmin() {
 		String typeId = ServletActionContext.getRequest().getParameter("typeId");
-		AdministratorType administratorType = new AdministratorType();
-		administratorType.setTypeId(Integer.parseInt(typeId));
-		administrator.setAdministratorType(administratorType);
+		administrator.setAdministratorType(administratorService.findAdministratorTypeById(Integer.parseInt(typeId)));
+		String districtId = ServletActionContext.getRequest().getParameter("districtId");
+		administrator.setDistrict(districtService.findDistrictById(districtId));
 		if (StringUtil.isBlank(administrator.getUsername())) {
 			try {
 				administratorService.saveAdmin(administrator);
@@ -105,4 +110,8 @@ public class AdministratorAction extends ActionSupport implements Preparable {
 		this.administratorService = administratorService;
 	}
 
+	public void setDistrictService(DistrictService districtService) {
+		this.districtService = districtService;
+	}
+	
 }

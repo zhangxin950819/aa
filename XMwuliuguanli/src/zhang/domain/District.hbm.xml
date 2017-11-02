@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="zhang.domain.District" table="District">
+
+		<id name="districtId">
+			<generator class="assigned"></generator>
+		</id>
+
+		<property name="districtName"></property>
+		
+		<set name="administrators" inverse="true">
+			<key column="districtId"></key>
+			<one-to-many class="zhang.domain.Administrator"/>
+		</set>
+		
+ 		<set name="fromOrders" inverse="true">
+			<key column="fromDistrictId"></key>
+			<one-to-many class="zhang.domain.Order"/>
+		</set> 
+ 		<set name="toOrders" inverse="true">
+			<key column="toDistrictId"></key>
+			<one-to-many class="zhang.domain.Order"/>
+		</set>
+	</class>
+</hibernate-mapping>

@@ -57,7 +57,7 @@
 						<th>姓名</th>
 						<th>电话号</th>
 						<th>家庭住址</th>
-						<th>地区</th>
+						<th>所属地区</th>
 						<th>管理员类型</th>
 						<th>操作</th>
 					</tr>
@@ -67,7 +67,7 @@
 						<td>${admin.name}</td>
 						<td>${admin.phonenumber}</td>
 						<td>${admin.address}</td>
-						<td>${admin.district}</td>
+						<td>${admin.district.districtName}</td>
 						<td>${admin.administratorType.typeName}</td>
 						<td><a class="link-update" href="${ctx}/administratorAction_addAdmin.action?id=${admin.id}">修改</a> 
 							<c:if test="${admin.administratorType.typeId!=0}">

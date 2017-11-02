@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="zhang.domain.Customer" table="Customer">
+
+		<id name="customerId">
+			<generator class="assigned"></generator>
+		</id>
+
+		<property name="customerName"></property>
+		<property name="phoneNumber"></property>
+		<property name="address"></property>
+		
+ 		<set name="fromOrders" inverse="true">
+			<key column="fromCustomerId"></key>
+			<one-to-many class="zhang.domain.Order"/>
+		</set> 
+ 		<set name="toOrders" inverse="true">
+			<key column="toCustomerId"></key>
+			<one-to-many class="zhang.domain.Order"/>
+		</set> 
+	</class>
+</hibernate-mapping>

@@ -70,11 +70,7 @@ public class AdministratorDao extends HibernateDaoSupport {
 		List<Administrator> returnList = new ArrayList<>();
 		if(adminList.size() < page.getPageNumber()) return adminList;
 		for(int i = (page.getNowPage()-1) * page.getPageNumber() ;i < page.getNowPage() * page.getPageNumber() && i < adminList.size(); i ++){
-			Administrator administrator = adminList.get(i);
-			if(StringUtil.isBlank(administrator.getAdministratorType().getTypeName())){
-				administrator.setAdministratorType(findAllAdministratorTypeByTypeId(administrator.getAdministratorType().getTypeId()));
-			}
-			returnList.add(administrator);
+			returnList.add(adminList.get(i));
 		}
 		return returnList;
 	}

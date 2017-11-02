@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="zhang.domain.Order" table="`Order`">
+
+		<id name="orderId">
+			<generator class="assigned"></generator>
+		</id>
+
+		<property name="time"></property>
+		<property name="state"></property>
+		<property name="address"></property>
+		
+		<many-to-one name="resTypes" column="resTypeId"  class="zhang.domain.ResType" ></many-to-one> 
+	 	<many-to-one name="fromCustomer" column="fromCustomerId"  class="zhang.domain.Customer" ></many-to-one> 
+		<many-to-one name="toCustomer" column="toCustomerId"  class="zhang.domain.Customer" ></many-to-one> 
+	 	<many-to-one name="fromDistrict" column="fromDistrictId"  class="zhang.domain.District" ></many-to-one> 
+		<many-to-one name="toDistrict" column="toDistrictId"  class="zhang.domain.District" ></many-to-one> 
+		<many-to-one name="fromAdministrator" column="fromAdministratorId"  class="zhang.domain.Administrator" ></many-to-one> 
+		<many-to-one name="toAdministrator" column="toAdministratorId"  class="zhang.domain.Administrator" ></many-to-one> 
+	</class>
+</hibernate-mapping>
